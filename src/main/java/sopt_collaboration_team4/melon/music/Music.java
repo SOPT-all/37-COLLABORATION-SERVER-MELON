@@ -32,6 +32,8 @@ public class Music {
 
     private LocalDate releaseDate;
 
+    private Long playCount = 0L;
+
     private Music(String title,
                   String artistName,
                   Album album,
@@ -46,6 +48,7 @@ public class Music {
         this.country = country;
         this.isTitle = isTitle;
         this.releaseDate = releaseDate;
+        this.playCount = 0L;
     }
 
     public static Music create(String title,
@@ -69,6 +72,10 @@ public class Music {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    public void increasePlayCount() {
+        this.playCount++;
     }
 
 }
