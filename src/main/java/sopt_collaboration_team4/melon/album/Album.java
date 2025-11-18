@@ -23,6 +23,8 @@ public class Album {
 
     private String artistName;
 
+    private String coverImageUrl;
+
     @OneToMany(mappedBy = "album",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Music> musics = new ArrayList<>();
 
@@ -30,6 +32,7 @@ public class Album {
         this.title = builder.title;
         this.imageUrl = builder.imageUrl;
         this.artistName = builder.artistName;
+        this.coverImageUrl = builder.coverImageUrl;
         this.musics = builder.musics;
     }
 
@@ -38,6 +41,7 @@ public class Album {
         private String title;
         private String imageUrl;
         private String artistName;
+        private String coverImageUrl;
         private List<Music> musics = new ArrayList<>();
 
         public Builder title(String title) {
@@ -57,6 +61,11 @@ public class Album {
 
         public Builder musics(List<Music> musics) {
             this.musics = musics;
+            return this;
+        }
+
+        public Builder coverImageUrl(String coverImageUrl) {
+            this.coverImageUrl = coverImageUrl;
             return this;
         }
 
