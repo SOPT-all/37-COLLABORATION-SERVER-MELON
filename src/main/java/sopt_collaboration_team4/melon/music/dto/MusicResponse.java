@@ -10,6 +10,8 @@ public class MusicResponse {
     private String title;
     private String artistName;
     private Long playCount;
+    private String country;
+    private String imageUrl;
 
     public static MusicResponse from(Music music) {
         MusicResponse res = new MusicResponse();
@@ -17,6 +19,8 @@ public class MusicResponse {
         res.title = music.getTitle();
         res.artistName = music.getArtistName();
         res.playCount = music.getPlayCount();
+        res.country = music.getCountry();
+        res.imageUrl = music.getImageUrl();
         return res;
     }
 }
