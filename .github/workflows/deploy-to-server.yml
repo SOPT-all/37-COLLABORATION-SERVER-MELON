@@ -30,7 +30,11 @@ jobs:
           mkdir -p src/main/resources
           echo "${{ secrets.SPRING_APPLICATION_YML }}" > src/main/resources/application.yml
 
-      # 4. Gradle 빌드
+      # 4-1. gradlew 실행 권한 부여
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # 4-2. Gradle 빌드
       - name: Build with Gradle
         run: ./gradlew clean build -x test
 
