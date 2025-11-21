@@ -1,10 +1,11 @@
 package sopt_collaboration_team4.melon.album.dto;
 
-import sopt_collaboration_team4.melon.album.Album;
-import sopt_collaboration_team4.melon.music.Music;
-
 import java.util.List;
+import lombok.Getter;
+import sopt_collaboration_team4.melon.album.Album;
+import sopt_collaboration_team4.melon.music.dto.MusicResponse;
 
+@Getter
 public class AlbumResponse {
 
     private Long id;
@@ -12,7 +13,7 @@ public class AlbumResponse {
     private String imageUrl;
     private String artistName;
     private String coverImageUrl;
-    private List<Music> musicList;
+    private List<MusicResponse> musicList;
 
     public static AlbumResponse from(Album album) {
         AlbumResponse res = new AlbumResponse();
@@ -21,6 +22,9 @@ public class AlbumResponse {
         res.imageUrl = album.getImageUrl();
         res.artistName = album.getArtistName();
         res.coverImageUrl = album.getCoverImageUrl();
+        res.musicList = album.getMusics().stream()
+                .map(MusicResponse::from)
+                .toList();
         return res;
     }
 }
