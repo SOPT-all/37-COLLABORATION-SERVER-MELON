@@ -23,9 +23,9 @@ public class MusicController {
     private final MusicService musicService;
 
     @GetMapping("/chart")
-    public List<MusicResponse> getPopularMusic(@PageableDefault(size = 8, sort = "playCount", direction = Sort.Direction.DESC)
-                                                   Pageable pageable) {
-        return musicService.getPopularMusics(pageable)
+    public List<MusicResponse> getSongsByChart(@PageableDefault(size = 8, sort = "playCount", direction = Sort.Direction.DESC)
+                                               Pageable pageable) {
+        return musicService.getSongsByChart(pageable)
                 .stream()
                 .map(MusicResponse::from)
                 .toList();
@@ -33,20 +33,27 @@ public class MusicController {
 
     @GetMapping("/newest")
     public ApiResponse<List<MusicResponse>> getNewestMusic(@PageableDefault(size = 8, sort = "releaseDate", direction = Sort.Direction.DESC)
-                                                  Pageable pageable,
-                                                          @RequestParam (required = false) String category) {
+                                                           Pageable pageable,
+                                                           @RequestParam (required = false) String category) {
         return ApiResponse.onSuccess(HttpStatus.OK, "최신 음악 목록을 성공적으로 가져왔습니다.", musicService.getNewestMusics(pageable, category));
     }
 
+    @GetMapping("/popular")
+    public ApiResponse<List<MusicResponse>> getPopularMusicForUser(@PageableDefault(size = 9,sort = "releaseDate" , direction = Sort.Direction.DESC)
+                                                                   Pageable pageable){
+        return ApiResponse.onSuccess(HttpStatus.OK,"사용자에게 인기선곡 데이터들을 성공적으로 반환합니다.",musicService.getPopularMusicForUser(pageable));
+    }
+
+
     @GetMapping("/mixup")
     public ApiResponse<List<MusicResponse>> getMixUpMusic(@PageableDefault(size = 7, sort = "releaseDate", direction = Sort.Direction.DESC)
-                                                             Pageable pageable) {
+                                                          Pageable pageable) {
         return ApiResponse.onSuccess(HttpStatus.OK, "믹스업 음악 목록을 성공적으로 가져왔습니다.", musicService.getMixUpMusics(pageable));
     }
 
     @GetMapping("/custom-recommendation")
     public ApiResponse<List<MusicResponse>> getCustomRecommendation(@PageableDefault(size = 3, sort = "releaseDate", direction = Sort.Direction.DESC)
-                                                             Pageable pageable) {
+                                                                    Pageable pageable) {
         return ApiResponse.onSuccess(HttpStatus.OK, "맞춤 추천 음악 목록을 성공적으로 가져왔습니다.", musicService.getCustomRecommendation(pageable));
     }
 }
