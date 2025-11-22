@@ -16,13 +16,20 @@ public class MusicService {
 
     private final MusicRepository musicRepository;
 
-    public Page<Music> getPopularMusics(Pageable pageable) {
+    public Page<Music> getSongsByChart(Pageable pageable) {
         return musicRepository.findAllByOrderByPlayCountDesc(pageable);
     }
 
     //아직 요청사항에는 없음
     public void increasePlayCount(long id) {
         musicRepository.findById(id).ifPresent(Music::increasePlayCount);
+    }
+
+    public List<MusicResponse> getPopularMusicForUser(Pageable pageable) {
+        return musicRepository.findRandomMusics(pageable)
+                .stream()
+                .map(MusicResponse::from)
+                .toList();
     }
 
     public List<MusicResponse> getNewestMusics(Pageable pageable, String country) {
