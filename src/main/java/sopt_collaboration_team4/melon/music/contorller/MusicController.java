@@ -23,13 +23,14 @@ public class MusicController {
     private final MusicService musicService;
 
     @GetMapping("/chart")
-    public List<MusicResponse> getSongsByChart(@Parameter(hidden = true)
+    public ApiResponse<List<MusicResponse>> getSongsByChart(@Parameter(hidden = true)
                                                @PageableDefault(size = 8, sort = "playCount", direction = Sort.Direction.DESC)
                                                Pageable pageable) {
-        return musicService.getSongsByChart(pageable)
+        List<MusicResponse> musicResponses = musicService.getSongsByChart(pageable)
                 .stream()
                 .map(MusicResponse::from)
                 .toList();
+        return ApiResponse.onSuccess(HttpStatus.OK,"음악 차트 목록을 성공적으로 가져왔습니다",musicResponses);
     }
 
     @GetMapping("/newest")
